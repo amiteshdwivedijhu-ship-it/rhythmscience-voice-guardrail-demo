@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<meta name="description" content="Interactive prototype: Rhythm Agentic AI voice run viewer with a healthcare-grade guardrail harness. Synthetic data only.">
+<title>Rhythm · Agentic AI · Voice Run Viewer</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <span class="brand-mark" aria-hidden="true"></span>
+    <span class="brand-name">Rhythm</span>
+    <span class="brand-sub">Agentic AI</span>
+  </div>
+  <div class="crumbs">
+    <span class="crumb">Platform</span>
+    <span class="crumb-sep">/</span>
+    <span class="crumb">Agentic AI</span>
+    <span class="crumb-sep">/</span>
+    <span class="crumb active">Voice run viewer</span>
+  </div>
+  <div class="top-actions">
+    <span class="proto-chip">Prototype · synthetic data</span>
+  </div>
+</header>
+
+<main id="run-viewer">
+
+  <section class="run-head" aria-labelledby="run-title">
+    <div class="run-title-block">
+      <h1 id="run-title">Voice run · monitor reconnection</h1>
+      <p class="lede" id="run-lede">A synthetic outbound call showing the guardrail loop: event, agent turns, guardrail trip, mandatory escalation, next action.</p>
+    </div>
+
+    <div class="scenario-picker" role="group" aria-label="Scenario">
+      <span class="picker-label">Scenario</span>
+      <button type="button" class="scenario-btn active" id="scn-urgent" data-scn="urgent">Monitor disconnected · urgent symptom</button>
+      <button type="button" class="scenario-btn" id="scn-routine" data-scn="routine">Connectivity fix · routine</button>
+    </div>
+
+    <div class="transport" role="group" aria-label="Run playback controls">
+      <button type="button" class="tbtn" id="btn-play" aria-label="Play or pause the run">Play</button>
+      <button type="button" class="tbtn" id="btn-step" aria-label="Step one turn">Step</button>
+      <button type="button" class="tbtn" id="btn-restart" aria-label="Restart the run">Restart</button>
+    </div>
+  </section>
+
+  <section class="call-event card" aria-labelledby="event-title">
+    <h2 id="event-title" class="card-label">Call event</h2>
+    <div class="event-grid">
+      <div class="event-fact">
+        <span class="fact-label">Trigger</span>
+        <span class="fact-value" id="ev-trigger">Monitor disconnected</span>
+      </div>
+      <div class="event-fact">
+        <span class="fact-label">Patient</span>
+        <span class="fact-value" id="ev-patient">M. Rivera, 72</span>
+      </div>
+      <div class="event-fact">
+        <span class="fact-label">Device</span>
+        <span class="fact-value" id="ev-device">RM-200 · S/N 84-221-09</span>
+      </div>
+      <div class="event-fact">
+        <span class="fact-label">Signal loss</span>
+        <span class="fact-value" id="ev-loss">14h 02m without transmission</span>
+      </div>
+      <div class="event-fact">
+        <span class="fact-label">Outbound line</span>
+        <span class="fact-value" id="ev-line">Branded caller ID · Riverbend Cardiology</span>
+      </div>
+      <div class="event-fact">
+        <span class="fact-label">Run status</span>
+        <span class="status-pill" id="ev-status"><span class="dot dot-amber"></span>Disconnected</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="console">
+    <section class="card col col-transcript" aria-labelledby="transcript-title">
+      <h2 id="transcript-title" class="card-label">Call transcript <span class="live-chip" id="live-chip">LIVE</span></h2>
+      <p class="col-note">Synthetic voice turns from the run. Agent turns are spoken by the voice agent on the branded line.</p>
+      <ol class="transcript" id="transcript" aria-live="polite"></ol>
+    </section>
+
+    <section class="card col col-actions" aria-labelledby="actions-title">
+      <h2 id="actions-title" class="card-label">Agent actions <span class="action-count" id="action-count"></span></h2>
+      <p class="col-note">Tool calls and outreach executed by the voice agent during the run.</p>
+      <ol class="action-list" id="action-list" aria-live="polite"></ol>
+    </section>
+
+    <section class="card col col-guardrail" aria-labelledby="guardrail-title">
+      <h2 id="guardrail-title" class="card-label">Guardrail harness</h2>
+      <div class="harness" id="harness">
+        <div class="harness-idle" id="harness-idle">
+          <p class="idle-text">Monitoring call for urgent or uncertain clinical content. No trip so far.</p>
+          <div class="chips">
+            <span class="chip" title="No PHI left the platform; urgent turns are never auto-resumed">Containment 100%</span>
+            <span class="chip" title="p95 time from patient turn end to next agent turn">Latency p95 1.2s</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="override-panel" id="override-panel" hidden aria-labelledby="override-title">
+        <h3 id="override-title">Escalate to human</h3>
+        <form id="override-form">
+          <div class="field">
+            <label for="ov-clinician">Clinician (who is taking this call?)</label>
+            <input type="text" id="ov-clinician" name="clinician" placeholder="e.g. RN Dana Ortiz" autocomplete="off" required>
+          </div>
+          <div class="field">
+            <span class="field-label">Disposition</span>
+            <label class="radio-row"><input type="radio" name="disposition" value="nurse-callback" required> <span>Dispatch nurse callback now</span></label>
+            <label class="radio-row"><input type="radio" name="disposition" value="follow-up"> <span>Schedule follow-up within 24h</span></label>
+            <label class="radio-row"><input type="radio" name="disposition" value="window-review"> <span>Request transmission window review</span></label>
+          </div>
+          <div class="field">
+            <label for="ov-note">Handoff note <span class="opt">(optional)</span></label>
+            <textarea id="ov-note" name="note" rows="2" placeholder="What the clinician should know first"></textarea>
+          </div>
+          <button type="submit" class="cta" id="btn-override">Confirm override and hand off to human</button>
+        </form>
+      </div>
+
+      <div class="handoff-done" id="handoff-done" hidden aria-live="polite">
+        <p class="handoff-title">Run handed off to human</p>
+        <p class="handoff-sub" id="handoff-sub"></p>
+      </div>
+
+      <h2 class="card-label worklist-label">Clinic worklist · next actions</h2>
+      <div class="worklist" id="worklist" aria-live="polite">
+        <p class="worklist-empty">No next actions queued yet.</p>
+      </div>
+    </section>
+  </div>
+
+  <footer class="honesty">
+    <p>Prototype of the Agentic AI voice run viewer with a guardrail harness, patterned on Rhythm's public Agentic AI language. Synthetic patient data only: no live telephony, no accounts, no PHI. The guardrail loop shown here is the mandatory escalate-to-human path for urgent or uncertain calls.</p>
+  </footer>
+
+</main>
+
+<script src="app.js"></script>
+</body>
+</html>
