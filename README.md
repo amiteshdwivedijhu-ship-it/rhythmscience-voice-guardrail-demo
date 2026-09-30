@@ -27,4 +27,4 @@ Then open http://127.0.0.1:8000/
 ## Notes
 
 - Synthetic patient data only: no live telephony, no accounts, no PHI.
-- Static files, zero dependencies: `index.html`, `styles.css`, `app.js`.
+- Responsive: single-column phone layout with touch-sized controls; three-column console on desktop.
