@@ -37,8 +37,8 @@
 }
 
 * { box-sizing: border-box; }
-
-html { font-family: var(--sans); }
+* { touch-action: manipulation; }
+html { font-family: var(--sans); -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
 
 body {
   margin: 0;
@@ -550,7 +550,61 @@ input[type="text"]:focus, textarea:focus { outline: 2px solid var(--wine); outli
 }
 .honesty p { margin: 0; }
 
-@media (max-width: 900px) {
-  .run-head { flex-direction: column; align-items: flex-start; }
-  .event-grid { grid-template-columns: 1fr 1fr; }
+/* ---------- responsive ---------- */
+
+/* Tablet and below: stack the console; two-up call event facts. */
+@media (max-width: 1100px) {
+  .console { grid-template-columns: 1fr; }
+  .event-grid { grid-template-columns: repeat(2, 1fr); }
+  .run-head { flex-wrap: wrap; }
+}
+
+/* Phones (portrait): single column, touch-sized controls, readable type. */
+@media (max-width: 720px) {
+  .topbar { flex-wrap: wrap; gap: 10px; padding: 10px 16px; }
+  .crumbs { display: none; }
+
+  #run-viewer { padding: 16px 16px 36px; }
+
+  .run-head { flex-direction: column; align-items: stretch; gap: 10px; }
+  .run-title-block h1 { font-size: 20px; }
+
+  .transport { display: flex; }
+  .tbtn { flex: 1 1 0; min-height: 46px; font-size: 14px; }
+
+  .scenario-picker { flex-direction: column; align-items: stretch; gap: 8px; }
+  .picker-label { align-self: flex-start; }
+  .scenario-btn {
+    display: block;
+    width: 100%;
+    min-height: 46px;
+    font-size: 13px;
+    text-align: left;
+  }
+
+  .event-grid { grid-template-columns: 1fr; }
+  .card { padding: 14px; }
+  .fact-value { font-size: 14px; }
+
+  .turn-meta { font-size: 11px; }
+  .bubble { font-size: 14px; padding: 10px 13px; }
+  .col-note { font-size: 12.5px; }
+
+  input[type="text"], textarea { font-size: 16px; }
+  .radio-row { min-height: 44px; padding: 10px 2px; }
+  .cta { min-height: 48px; }
+  .solo-blocked { min-height: 48px; }
+
+  .tool-arg { font-size: 12px; }
+  .tool-result { font-size: 12.5px; }
+  .gt-why, .gt-span { font-size: 13px; }
+
+  .wl-row { flex-wrap: wrap; }
+}
+
+/* Small phones: tighten spacing further. */
+@media (max-width: 380px) {
+  .run-title-block h1 { font-size: 18.5px; }
+  .transport { flex-wrap: wrap; }
+  .tbtn { min-width: 96px; }
 }
